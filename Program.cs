@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Tic Tac Toe game
+// Lisa Child, CSE 210, 17 Jan 2022
+
+using System;
 using System.Collections.Generic;
 namespace cse210_01_tictactoe
 {
@@ -6,19 +9,12 @@ namespace cse210_01_tictactoe
     {
         static void Main(string[] args)
         {
-            List<string>squares = new List<string>();
- 
-            squares.Add("1");
-            squares.Add("2");
-            squares.Add("3");
-            squares.Add("4");
-            squares.Add("5");
-            squares.Add("6");
-            squares.Add("7");
-            squares.Add("8");
-            squares.Add("9");
+            List<string> squares = AddNumbers();
+
             // while statement to run game until a win or tie
+            
             bool win = false;
+            bool tie = false;
             while (win != true)
             // Calling Board Game Player1
             {
@@ -30,10 +26,11 @@ namespace cse210_01_tictactoe
                 int Index = int.Parse(Player1);
                 squares[Index- 1] = "X";
                 PrintGame(squares);
-                // check for win
+                // check for win or tie
                 win = CheckForWin(squares);
-                
-                if (win != false)
+                tie = Tie(squares);
+
+                if (win != false || tie != false)
                 {
                     break;
                 }
@@ -54,10 +51,21 @@ namespace cse210_01_tictactoe
                     break;
                 }
             }
+            
         }
-        
+        //Add 1-9 to squares
+        static List<string> AddNumbers()
+        {
+            List<string> squares = new List<string>();
+            for (int i =1; i<=9; i++)
+            {
+                squares.Add(i.ToString());
+            }
+            return squares;
+        }
+    
         static void PrintGame(List<string> squares)
-
+        // Print Game Board function
         
         {
             Console.WriteLine();
@@ -69,7 +77,7 @@ namespace cse210_01_tictactoe
             Console.WriteLine();
         
         }
-        
+        // Check for Win
         static bool CheckForWin(List<string> squares)
         {
             if ((squares[0]== "X" && squares[1]== "X" && squares [2] == "X")||
@@ -104,8 +112,27 @@ namespace cse210_01_tictactoe
             {
             
                 return false;
+            }    
+        } 
+        // bool for a Tie, this code was not mine      
+        static bool Tie(List<string> squares)
+        {
+            bool foundDigit = false;
+            
+            foreach (string value in squares)
+            {
+                if (char.IsDigit(value[0]))
+                {
+                    foundDigit = true;
+                    break;
+                }
             }
-        }       
-        
+            if (foundDigit == false) 
+            {
+            Console.WriteLine ("Tie, Thanks for playing");
+            }
+            return !foundDigit;     
+        }
     }
 }   
+
